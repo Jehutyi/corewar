@@ -1,4 +1,4 @@
-	.name "loop"
+	.name "loop_wall"
 
 	# r1 i
 	# r2 "for" steps
@@ -8,10 +8,11 @@
 	# r16 number to enable condition to exit
 
 main:
+	sti r1, %:loop, %1
+	sti r1, %:wall, %1
 	ld %0, r1			# i
 	ld %1, r2			# 1 unit steps
 	ld %255, r3			# for 255 iterations
-	ld %0,r15
 	ld %14, r8
 	ld %256, r16		# 0b100000000
 loop:
@@ -23,7 +24,7 @@ loop:
 	and r4, r16, r5		# diff & 0b100000000 -> 0 except 0b100000000
 	zjmp %:back_wall
 wall:
-	live	%12345
+	live	%0
 	st	r2, -37
 	st	r2, -46
 	st	r2, -55
@@ -77,57 +78,59 @@ wall:
 	st	r2, -496
 	st	r2, -505
 	st	r2, -511
-	zjmp %:main
-back_wall:
-	live	%42
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	st	r8,-400
-	ld	%0,r15
+	fork	%:main
 	zjmp	%:wall
+back_wall:
+	live	%0
+	st	r8,400
+	st	r8,404
+	st	r8,408
+	st	r8,412
+	st	r8,416
+	st	r8,420
+	st	r8,424
+	st	r8,428
+	st	r8,432
+	st	r8,436
+	st	r8,440
+	st	r8,444
+	st	r8,448
+	st	r8,452
+	st	r8,456
+	st	r8,460
+	st	r8,464
+	st	r8,468
+	st	r8,472
+	st	r8,476
+	st	r8,480
+	st	r8,484
+	st	r8,488
+	st	r8,492
+	st	r8,496
+	st	r8,500
+	st	r8,504
+	st	r8,508
+	st	r8,512
+	st	r8,516
+	st	r8,520
+	st	r8,524
+	st	r8,528
+	st	r8,532
+	st	r8,536
+	st	r8,540
+	st	r8,544
+	st	r8,518
+	st	r8,522
+	st	r8,526
+	st	r8,530
+	st	r8,534
+	st	r8,538
+	st	r8,542
+	st	r8,546
+	st	r8,550
+	st	r8,554
+	st	r8,558
+	st	r8,562
+	ld	%0,r15
+	fork	%:wall
+	zjmp	%:back_wall
